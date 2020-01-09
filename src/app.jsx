@@ -36,14 +36,12 @@ class App extends Component {
   }
 
   handleChange(event) {
-    console.log("entered");
     let nam = event.target.name;
     let val = event.target.value;
     this.setState({ [nam]: val });
   }
 
   calculateChange(event) {
-    console.log("calculated");
     let dueAmount = this.state["amountDue"];
     let recAmount = this.state["amountReceived"];
     let diffAmounttotal = recAmount - dueAmount;
