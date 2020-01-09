@@ -21,15 +21,15 @@ class App extends Component {
     this.state = {
       name: "",
       value: "",
-      totalChange: "",
-      twenties: "",
-      tens: "",
-      fives: "",
-      ones: "",
-      quaters: "",
-      dimes: "",
-      nickels: "",
-      pennies: ""
+      totalChange: "0",
+      twenties: "0",
+      tens: "0",
+      fives: "0",
+      ones: "0",
+      quaters: "0",
+      dimes: "0",
+      nickels: "0",
+      pennies: "0"
     };
     this.handleChange = this.handleChange.bind(this);
     this.calculateChange = this.calculateChange.bind(this);
@@ -49,12 +49,19 @@ class App extends Component {
     let diffAmounttotal = recAmount - dueAmount;
     let diffRounded = Math.floor(diffAmounttotal).toFixed(0);
     let diffTwodecimals = diffAmounttotal.toFixed(2);
-    let diffAmount = (diffTwodecimals - diffRounded) * 100;
+    let diffAmount = diffTwodecimals * 100;
 
-    let twenties = 0;
-    let tens = 0;
-    let fives = 0;
-    let ones = 0;
+    let twenties = Math.floor(diffAmount / 2000);
+    diffAmount = diffAmount % 2000;
+
+    let tens = Math.floor(diffAmount / 1000);
+    diffAmount = diffAmount % 1000;
+
+    let fives = Math.floor(diffAmount / 500);
+    diffAmount = diffAmount % 500;
+
+    let ones = Math.floor(diffAmount / 100);
+    diffAmount = diffAmount % 100;
 
     let calcQuarter = Math.floor(diffAmount / 25);
     diffAmount = diffAmount % 25;
@@ -78,15 +85,6 @@ class App extends Component {
       nickels: calcNickel,
       pennies: calcPenny
     });
-
-    console.log(diffAmounttotal);
-    console.log(diffRounded);
-    console.log(diffTwodecimals);
-    console.log(diffAmount);
-    console.log(calcQuarter);
-    console.log(calcDime);
-    console.log(calcNickel);
-    console.log(calcPenny);
   }
 
   render() {
@@ -119,26 +117,24 @@ class App extends Component {
               <div className="card-body">
                 <div>
                   <label>How much is due?</label>
-                  <p>
-                    <input
-                      type="text"
-                      name="amountDue"
-                      placeholder="enter amount"
-                      onChange={this.handleChange}
-                    />
-                  </p>
+                  <br />
+                  <input
+                    type="text"
+                    name="amountDue"
+                    placeholder="enter amount"
+                    onChange={this.handleChange}
+                  />
                 </div>
 
                 <div>
                   <label>How much was received?</label>
-                  <p>
-                    <input
-                      type="text"
-                      name="amountReceived"
-                      placeholder="enter amount"
-                      onChange={this.handleChange}
-                    />
-                  </p>
+                  <br />
+                  <input
+                    type="text"
+                    name="amountReceived"
+                    placeholder="enter amount"
+                    onChange={this.handleChange}
+                  />
                 </div>
               </div>
               <div
@@ -159,74 +155,75 @@ class App extends Component {
             <div className="card">
               <div className="card-body">
                 <div className="alert alert-success" role="alert">
-                  The total change due is {totalChange}
+                  The total change due is ${totalChange}
                 </div>
+                <div className="alert alert-success" role="alert">
+                  <div className="row row-cols-1 row-cols-md-4">
+                    <div className="col mb-4">
+                      <div className="card">
+                        <div className="card-body">
+                          <h5>Twenties</h5>
+                          <p className="change">{twenties}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col mb-4">
+                      <div className="card">
+                        <div className="card-body">
+                          <h5>Tens</h5>
+                          <p className="change">{tens}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col mb-4">
+                      <div className="card">
+                        <div className="card-body">
+                          <h5>Fives</h5>
+                          <p className="change">{fives}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col mb-4">
+                      <div className="card">
+                        <div className="card-body">
+                          <h5>Ones</h5>
+                          <p className="change">{ones}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-                <div className="row row-cols-1 row-cols-md-4">
-                  <div className="col mb-4">
-                    <div className="card">
-                      <div className="card-body">
-                        <h5 className="card-title">Twenties</h5>
-                        <p className="card-text">{twenties}</p>
+                  <div className="row row-cols-1 row-cols-md-4">
+                    <div className="col mb-4">
+                      <div className="card">
+                        <div className="card-body">
+                          <h5>Quarters</h5>
+                          <p className="change">{quaters}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="col mb-4">
-                    <div className="card">
-                      <div className="card-body">
-                        <h5 className="card-title">Tens</h5>
-                        <p className="card-text">{tens}</p>
+                    <div className="col mb-4">
+                      <div className="card">
+                        <div className="card-body">
+                          <h5>Dimes</h5>
+                          <p className="change">{dimes}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="col mb-4">
-                    <div className="card">
-                      <div className="card-body">
-                        <h5 className="card-title">Fives</h5>
-                        <p className="card-text">{fives}</p>
+                    <div className="col mb-4">
+                      <div className="card">
+                        <div className="card-body">
+                          <h5>Nickels</h5>
+                          <p className="change">{nickels}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="col mb-4">
-                    <div className="card">
-                      <div className="card-body">
-                        <h5 className="card-title">Ones</h5>
-                        <p className="card-text">{ones}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row row-cols-1 row-cols-md-4">
-                  <div className="col mb-4">
-                    <div className="card">
-                      <div className="card-body">
-                        <h5 className="card-title">Quarters</h5>
-                        <p className="card-text">{quaters}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col mb-4">
-                    <div className="card">
-                      <div className="card-body">
-                        <h5 className="card-title">Dimes</h5>
-                        <p className="card-text">{dimes}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col mb-4">
-                    <div className="card">
-                      <div className="card-body">
-                        <h5 className="card-title">Nickels</h5>
-                        <p className="card-text">{nickels}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col mb-4">
-                    <div className="card">
-                      <div className="card-body">
-                        <h5 className="card-title">Pennies</h5>
-                        <p className="card-text">{pennies}</p>
+                    <div className="col mb-4">
+                      <div className="card">
+                        <div className="card-body">
+                          <h5>Pennies</h5>
+                          <p className="change">{pennies}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
